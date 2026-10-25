@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080d16">
+<title>NEX Compress — Video Tools</title>
+<style>
+:root{color-scheme:dark;--bg:#080d16;--panel:#101827;--panel2:#0c1320;--line:#24354b;--text:#edf6ff;--muted:#8fa4bd;--blue:#39c9ff;--blue2:#1677ff;--good:#65e6b0;--bad:#ff8c9a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#12365b 0,transparent 43%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+.wrap{width:min(1000px,calc(100% - 32px));margin:auto}.top{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff12}.brand{display:flex;gap:11px;align-items:center;font-weight:900;letter-spacing:.08em}.logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--blue2));display:grid;place-items:center;color:#06101b;font-weight:1000;box-shadow:0 0 28px #1eabff35}.brand span{color:var(--blue)}.local{font-size:12px;color:#b5c9df;border:1px solid var(--line);border-radius:99px;padding:7px 11px}
+.hero{text-align:center;padding:52px 0 28px}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.22em;color:var(--blue);font-weight:800}.hero h1{font-size:clamp(32px,6vw,56px);letter-spacing:-.045em;line-height:1.05;margin:13px 0}.hero h1 em{font-style:normal;color:var(--blue)}.hero p{max-width:610px;margin:0 auto;color:var(--muted);font-size:16px}
+.layout{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:start}.panel{background:linear-gradient(180deg,#121d2d,#0c1421);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 16px 50px #0002}.panel h2{font-size:17px;margin:0 0 5px}.sub{color:var(--muted);font-size:13px;margin:0 0 20px}.drop{border:1px dashed #3b6789;background:#0a1726;border-radius:15px;min-height:178px;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;cursor:pointer;transition:.2s}.drop:hover,.drop.drag{border-color:var(--blue);background:#0d2134}.drop strong{display:block;font-size:15px;margin:8px 0 3px}.drop small{color:var(--muted)}.upload-icon{width:43px;height:43px;border-radius:14px;background:#103451;color:var(--blue);display:grid;place-items:center;margin:auto;font-size:23px}.filename{color:var(--blue);font-size:13px;overflow-wrap:anywhere;margin-top:9px}input[type=file]{display:none}.field{margin-top:18px}.field label{display:block;font-weight:700;font-size:13px;margin-bottom:8px}.select,.modebox{width:100%;background:#091321;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:12px;font:inherit;outline:none}.select:focus{border-color:var(--blue)}.modegrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.mode{position:relative;border:1px solid var(--line);border-radius:12px;padding:12px;background:#0a1422;cursor:pointer}.mode input{accent-color:var(--blue)}.mode strong{display:block;font-size:13px;margin:3px 0}.mode small{color:var(--muted);font-size:11px}.mode:has(input:checked){border-color:var(--blue);background:#0b2133}.primary,.secondary{width:100%;border:0;border-radius:12px;padding:14px 16px;font:inherit;font-weight:850;cursor:pointer;transition:.15s}.primary{margin-top:19px;background:linear-gradient(100deg,var(--blue),#418cff);color:#04111e;box-shadow:0 8px 24px #168bff25}.primary:hover{filter:brightness(1.08);transform:translateY(-1px)}button:disabled{opacity:.5;cursor:not-allowed;transform:none!important}.secondary{margin-top:9px;background:#18263a;color:var(--text);border:1px solid var(--line)}.progress-wrap{margin-top:16px}.progress-head{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:7px}.progress{width:100%;height:7px;border-radius:99px;background:#202d3e;overflow:hidden}.progress div{height:100%;width:0;background:linear-gradient(90deg,var(--blue2),var(--blue));transition:width .15s}.status{font-size:13px;min-height:22px;color:var(--muted);margin:12px 0 0;overflow-wrap:anywhere}.status.good{color:var(--good)}.status.bad{color:var(--bad)}.side h3{font-size:14px;margin:0 0 12px}.step{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid #ffffff0d}.step:last-child{border:0}.num{flex:none;width:28px;height:28px;border:1px solid #2c5471;background:#10253a;color:var(--blue);border-radius:9px;display:grid;place-items:center;font-size:12px;font-weight:900}.step b{display:block;font-size:13px}.step p{font-size:12px;color:var(--muted);margin:3px 0 0}.notice{border:1px solid #29445b;background:#0a1725;border-radius:12px;padding:12px;margin-top:18px;color:#a9bfd4;font-size:12px}.recommend{display:inline-block;margin-left:6px;padding:2px 7px;border:1px solid #1e8caa;border-radius:99px;background:#0b2b3b;color:#75ddff;font-size:9px;font-weight:900;letter-spacing:.06em;vertical-align:middle}.variant-help{margin:7px 0 0;color:var(--muted);font-size:12px;line-height:1.45}.credit{margin:20px 0 30px;text-align:center;color:#7f93aa;font-size:12px}.credit a{color:var(--blue);text-decoration:none;font-weight:800}.credit a:hover{text-decoration:underline}.social{margin:30px 0 24px;padding:25px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(135deg,#101c2b,#0b1421);text-align:center;position:relative;overflow:hidden}.social:before{content:"";position:absolute;width:240px;height:160px;left:50%;top:-125px;transform:translateX(-50%);background:#39c9ff25;filter:blur(35px);pointer-events:none}.social-eyebrow{position:relative;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);font-weight:900}.social h2{position:relative;margin:5px 0 5px;font-size:22px;letter-spacing:-.03em}.social p{position:relative;margin:0;color:var(--muted);font-size:13px}.social-links{position:relative;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:19px}.social-link{display:flex;align-items:center;justify-content:center;gap:9px;min-width:155px;padding:11px 15px;border:1px solid #2a4058;border-radius:12px;background:#0a1421;color:var(--text);text-decoration:none;font-size:13px;font-weight:800;transition:transform .16s,border-color .16s,background .16s}.social-link:hover{transform:translateY(-2px);border-color:var(--blue);background:#102238}.social-icon{width:19px;height:19px;display:grid;place-items:center;color:var(--blue);font-size:17px}.social-link span:last-child{display:flex;flex-direction:column;align-items:flex-start;line-height:1.25}.social-link small{font-size:10px;color:var(--muted);font-weight:500;margin-top:3px}.foot{border-top:1px solid #ffffff10;padding:18px 0 28px;text-align:center;color:#6e839b;font-size:11px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.hero{padding-top:38px}.panel{padding:17px}.top{height:66px}.local{font-size:10px}.modegrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="wrap top">
+  <div class="brand"><div class="logo">N</div><div>NEX <span>COMPRESS</span></div></div>
+  <div class="local">● LOCAL PROCESSING</div>
+</header>
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">Creator video toolkit</div>
+    <h1>Make your video <em>ready.</em></h1>
+    <p>Prepare an MP4 locally, patch its metadata, and download the result. Your video and audio stay on your device during processing.</p>
+  </section>
+  <div class="layout">
+    <section class="panel">
+      <h2>Video workspace</h2>
+      <p class="sub">Choose a workflow and configure your output.</p>
+      <label class="drop" id="drop" for="source">
+        <div><div class="upload-icon">↑</div><strong>Drop a video here or browse</strong><small>MP4 recommended for Patch only · Large files may use lots of memory</small><div class="filename" id="filename">No video selected</div></div>
+      </label>
+      <input id="source" type="file" accept="video/*">
+      <div class="field">
+        <label>Workflow</label>
+        <div class="modegrid">
+          <label class="mode"><input type="radio" name="workflow" value="patch" checked> <strong>Patch only</strong><small>Patch an existing MP4 without downscaling.</small></label>
+          <label class="mode"><input type="radio" name="workflow" value="downscale"> <strong>Downscale + patch <span class="recommend">RECOMMENDED</span></strong><small>Prepare video locally, then patch metadata.</small></label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="variant">Choose a variant</label>
+        <p class="variant-help">If a variant doesn’t work for you, try another. Each variant is a different method :D</p>
+        <select class="select" id="variant">
+          <option value="variant-1">Variant 1 — Experimental (Recommended)</option>
+          <option value="variant-2">Variant 2 — HOLY AGGRESSIVE (Recommended)</option>
+          <option value="variant-3">Variant 3 — Not Aggressive</option>
+        </select>
+      </div>
+      <button class="primary" id="start">Patch video</button>
+      <button class="secondary" id="cancel" disabled>Cancel processing</button>
+      <div class="progress-wrap">
+        <div class="progress-head"><span id="progressLabel">Waiting for video</span><span id="percent">0%</span></div>
+        <div class="progress"><div id="bar"></div></div>
+      </div>
+      <p class="status" id="status" role="status" aria-live="polite">Select a video to get started.</p>
+      <a class="primary" id="download" hidden style="display:block;text-align:center;text-decoration:none;margin-top:15px">Download patched video</a>
+      <div class="credit">Powered by <a href="https://compressbase.com/" target="_blank" rel="noopener noreferrer">CompressBase</a></div>
+    </section>
+    <aside class="panel side">
+      <h3>How it works</h3>
+      <div class="step"><div class="num">01</div><div><b>Select your video</b><p>Pick a source file from your device. Patch only expects a conventional MP4.</p></div></div>
+      <div class="step"><div class="num">02</div><div><b>Choose a variant</b><p>Use the option that matches your posting workflow.</p></div></div>
+      <div class="step"><div class="num">03</div><div><b>Process locally</b><p>Downscaling, when selected, runs in your browser. Only patch metadata is sent to the API.</p></div></div>
+      <div class="step"><div class="num">04</div><div><b>Download the result</b><p>When processing completes, use the download link to save your MP4.</p></div></div>
+      <div class="notice"><b>Prototype note</b><br>Downscaling can be slow and may exhaust browser memory on long or high-resolution videos. Keep this tab open until processing finishes.</div>
+    </aside>
+  </div>
+  <section class="social" aria-labelledby="social-title">
+    <div class="social-eyebrow">Stay connected</div>
+    <h2 id="social-title">Connect with <span style="color:var(--blue)">NeXbane</span></h2>
+    <p>Follow my content and join the community.</p>
+    <nav class="social-links" aria-label="NeXbane social links">
+      <a class="social-link" href="https://www.tiktok.com/@nexbanee" target="_blank" rel="noopener noreferrer" aria-label="Follow NeXbane on TikTok">
+        <span class="social-icon" aria-hidden="true">♪</span><span>TikTok<small>@nexbanee</small></span>
+      </a>
+      <a class="social-link" href="https://www.youtube.com/@NeXbane" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to NeXbane on YouTube">
+        <span class="social-icon" aria-hidden="true">▶</span><span>YouTube<small>@NeXbane</small></span>
+      </a>
+      <a class="social-link" href="https://discord.gg/7qx82yxAsT" target="_blank" rel="noopener noreferrer" aria-label="Join the NeXbane Discord server">
+        <span class="social-icon" aria-hidden="true">◈</span><span>Discord<small>Join the community</small></span>
+      </a>
+    </nav>
+  </section>
+</main>
+<footer class="wrap foot">NEX COMPRESS · Your video stays on your device during local processing.</footer>
+<script type="module">
+import { patchVideo } from 'https://compressbase.com/method-api/client.mjs';
+import { downscaleVideo } from 'https://compressbase.com/method-api/downscale.mjs';
+
+const $ = id => document.getElementById(id);
+let controller = null;
+let downloadUrl = null;
+const source = $('source');
+const start = $('start');
+const cancel = $('cancel');
+const download = $('download');
+const status = $('status');
+const bar = $('bar');
+const percent = $('percent');
+const progressLabel = $('progressLabel');
+const drop = $('drop');
+
+function setStatus(message, kind='') {
+  status.textContent = message;
+  status.className = 'status' + (kind ? ' ' + kind : '');
+}
+function setProgress(value, label) {
+  const n = Math.max(0, Math.min(100, value));
+  bar.style.width = n + '%';
+  percent.textContent = Math.round(n) + '%';
+  if (label) progressLabel.textContent = label;
+}
+function workflow() {
+  return document.querySelector('input[name="workflow"]:checked').value;
+}
+function updateFileLabel() {
+  const file = source.files?.[0];
+  $('filename').textContent = file ? `${file.name} · ${(file.size / 1024 / 1024).toFixed(1)} MB` : 'No video selected';
+  if (file) setStatus('Video selected. Ready to process.');
+}
+source.addEventListener('change', updateFileLabel);
+drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('drag'); });
+drop.addEventListener('dragleave', () => drop.classList.remove('drag'));
+drop.addEventListener('drop', e => {
+  e.preventDefault(); drop.classList.remove('drag');
+  const file = e.dataTransfer?.files?.[0];
+  if (!file) return;
+  try {
+    const dt = new DataTransfer(); dt.items.add(file); source.files = dt.files;
+    updateFileLabel();
+  } catch { setStatus('Could not use that dropped file. Please browse to select it.', 'bad'); }
+});
+document.querySelectorAll('input[name="workflow"]').forEach(el => el.addEventListener('change', () => {
+  start.textContent = workflow() === 'patch' ? 'Patch video' : 'Downscale & patch';
+  source.accept = workflow() === 'patch' ? 'video/mp4,.mp4' : 'video/*';
+}));
+
+cancel.addEventListener('click', () => controller?.abort());
+start.addEventListener('click', async () => {
+  const file = source.files?.[0];
+  if (!file) { setStatus('Choose a video file first.', 'bad'); return; }
+  const postingDevice = $('variant').value;
+  if (!postingDevice) { setStatus('Choose a variant first.', 'bad'); return; }
+  if (workflow() === 'patch' && !(/\.mp4$/i.test(file.name) || file.type === 'video/mp4')) {
+    setStatus('Patch only needs an MP4 file. Choose Downscale + patch for another video format.', 'bad'); return;
+  }
+
+  controller = new AbortController();
+  start.disabled = true; cancel.disabled = false; download.hidden = true;
+  setProgress(0, 'Preparing');
+  if (downloadUrl) { URL.revokeObjectURL(downloadUrl); downloadUrl = null; }
+  const onStatus = message => { setStatus(message); progressLabel.textContent = message; };
+  try {
+    let input = file;
+    if (workflow() === 'downscale') {
+      setStatus('Preparing video on your device…');
+      input = await downscaleVideo(file, {
+        signal: controller.signal,
+        onStatus,
+        onProgress: fraction => setProgress(Math.max(0, fraction * 95), 'Downscaling')
+      });
+    }
+    controller.signal.throwIfAborted();
+    const output = await patchVideo(input, {
+      postingDevice,
+      signal: controller.signal,
+      onStatus
+    });
+    controller.signal.throwIfAborted();
+    downloadUrl = URL.createObjectURL(output);
+    download.href = downloadUrl;
+    const stem = file.name.replace(/\.[^.]+$/, '') || 'video';
+    download.download = stem + '_patched.mp4';
+    download.hidden = false;
+    setProgress(100, 'Complete');
+    setStatus('Ready. Your patched video is available to download.', 'good');
+  } catch (error) {
+    if (error?.name === 'AbortError' || controller.signal.aborted) setStatus('Processing cancelled.', 'bad');
+    else setStatus(error?.message || 'Processing failed. Try another MP4 or a smaller file.', 'bad');
+    progressLabel.textContent = 'Not completed';
+  } finally {
+    start.disabled = false; cancel.disabled = true; controller = null;
+  }
+});
+window.addEventListener('beforeunload', () => { if (downloadUrl) URL.revokeObjectURL(downloadUrl); });
+</script>
+</body>
+</html>
